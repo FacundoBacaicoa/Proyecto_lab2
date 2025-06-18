@@ -50,10 +50,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'))); 
 
 
-//  Rutas
-app.get('/', (req, res) => {
-  res.render('login', { title: 'Inicio' });
-});
 app.use(authRoutes);
 app.use(homeRoutes);
 app.use('/images', imagesRoutes); 
