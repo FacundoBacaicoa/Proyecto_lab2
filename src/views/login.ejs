@@ -45,6 +45,41 @@
     </div>
   </div>
 
-<script src="/public/js/login.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.querySelector('form');
+      const inputs = form.querySelectorAll('input');
+
+      // Validación individual al hacer blur
+      inputs.forEach(input => {
+        input.addEventListener('blur', () => {
+          const value = input.value.trim();
+          input.classList.remove('is-invalid');
+          if (!value) {
+            input.classList.add('is-invalid');
+          }
+        });
+      });
+
+      // Validación completa al enviar
+      form.addEventListener('submit', (event) => {
+        let isValid = true;
+
+        inputs.forEach(input => {
+          const value = input.value.trim();
+          input.classList.remove('is-invalid');
+
+          if (!value) {
+            input.classList.add('is-invalid');
+            isValid = false;
+          }
+        });
+
+        if (!isValid) {
+          event.preventDefault(); 
+        }
+      });
+    });
+  </script>
 </body>
 </html>

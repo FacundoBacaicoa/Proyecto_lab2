@@ -69,6 +69,66 @@
     </div>
   </div>
 
-<script src="/public/js/register.js"></script>
+ <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.querySelector('form');
+      const inputs = form.querySelectorAll('input');
+      const passwordInput = form.querySelector('input[name="password"]');
+      const confirmPasswordInput = form.querySelector('input[name="confirm_password"]');
+
+      // Función de validación individual
+      function validateInput(input) {
+        const value = input.value.trim();
+        const name = input.name;
+        let valid = true;
+
+        input.classList.remove('is-invalid');
+
+        if (!value) {
+          valid = false;
+        } else {
+          if (name === 'email') {
+            const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+            if (!emailRegex.test(value)) valid = false;
+          }
+
+          if (name === 'password' && value.length < 8) {
+            valid = false;
+          }
+
+          if (name === 'username' && value.length < 3) {
+            valid = false;
+          }
+
+          if (name === 'confirm_password') {
+            if (value !== passwordInput.value.trim()) valid = false;
+          }
+        }
+
+        if (!valid) input.classList.add('is-invalid');
+        return valid;
+      }
+
+      // Validación al hacer blur en cada input
+      inputs.forEach(input => {
+        input.addEventListener('blur', () => {
+          validateInput(input);
+        });
+      });
+
+      // Validación total al enviar el formulario
+      form.addEventListener('submit', (event) => {
+        let isFormValid = true;
+        inputs.forEach(input => {
+          const valid = validateInput(input);
+          if (!valid) isFormValid = false;
+        });
+
+        if (!isFormValid) {
+          event.preventDefault(); // Evita el envío
+        }
+      });
+    });
+  </script>
 </body>
 </html>
